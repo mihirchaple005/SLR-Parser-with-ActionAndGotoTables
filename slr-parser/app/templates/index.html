@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLR Parser</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SLR Parser</h1>
+        
+        <!-- Grammar Input Section -->
+        <div class="section">
+            <h2>Grammar Input</h2>
+            <div id="grammar-inputs">
+                <div class="production">
+                    <input type="text" class="production-input" placeholder="E -> E + T">
+                    <button class="remove-btn">Remove Production</button>
+                </div>
+            </div>
+            <button id="add-production">Add Production</button>
+            <button id="build-table">Build Parsing Table</button>
+        </div>
+        
+        <!-- Parsing Tables Section -->
+        <div class="section">
+            <h2>Parsing Tables</h2>
+            <div id="tables-container">
+                <div id="action-table-container"></div>
+                <div id="goto-table-container"></div>
+            </div>
+        </div>
+        
+        <!-- Input String Parsing Section -->
+        <div class="section">
+            <h2>Input String</h2>
+            <input type="text" id="input-string" placeholder="Enter string to parse">
+            <button id="parse-btn">Parse</button>
+            <div id="parse-result"></div>
+        </div>
+    </div>
+    
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
