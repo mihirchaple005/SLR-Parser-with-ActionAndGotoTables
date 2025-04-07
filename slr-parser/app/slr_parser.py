@@ -1,3 +1,5 @@
+# Gramme class is working fine all first and follow are calculated corrctly
+
 class Grammar:
     def __init__(self, productions):
         self.productions = productions
@@ -47,6 +49,7 @@ class Grammar:
                     if 'ε' not in self.first_sets[head]:
                         self.first_sets[head].add('ε')
                         changed = True
+        # print("First sets: ", self.first_sets)
 
     def _compute_follow_sets(self):
         # Initialize FOLLOW sets
@@ -55,6 +58,7 @@ class Grammar:
         self.follow_sets[self.start_symbol].add('$')
 
         # Iteratively compute FOLLOW sets
+        
         changed = True
         while changed:
             changed = False
@@ -80,6 +84,7 @@ class Grammar:
                         self.follow_sets[B].update(self.follow_sets[head])
                         if len(self.follow_sets[B]) > before:
                             changed = True
+        print("Follow sets: ", self.follow_sets)
 
     def _first_of_sequence(self, sequence):
         first = set()
@@ -101,7 +106,7 @@ class SLRParser:
         self.goto_table = []
         self.build_parsing_table()
 
-    def closure(self, items):
+    def closure(self, items : set):
         """
         Compute the closure of a set of LR(0) items
         
@@ -112,20 +117,27 @@ class SLRParser:
         Returns:
             The closure set of items
         """
-        closure_set = set(items)  # Start with the original items
-        
+        print(items)
+        closure_set = list(items)  # Start with the original items
+        print("This is closure set", closure_set)
         changed = True
+        print("Before while")
         while changed:
             changed = False
-            current_items = list(closure_set)  # Make a copy to iterate over
-            
+            current_items = closure_set  # Make a copy to iterate over
+            print("while ke andaer") 
+            print("current items : ", current_items)
             for (head, body, pos) in current_items:
+                print("inside")
                 # If we've reached the end of the production, skip
+                print("pos : ", pos)
                 if pos >= len(body):
-                    continue
                     
+                    continue
+                   
                 next_symbol = body[pos]
                 
+
                 # If next symbol is a non-terminal, add its productions
                 if next_symbol in self.grammar.non_terminals:
                     for prod_head, prod_body in self.grammar.productions:
@@ -134,7 +146,7 @@ class SLRParser:
                             if new_item not in closure_set:
                                 closure_set.add(new_item)
                                 changed = True
-                                
+        print("This is clousure set",closure_set)                        
         return closure_set
 
     def goto(self, items, symbol):
@@ -160,6 +172,7 @@ class SLRParser:
         return self.closure(moved_items) if moved_items else set()
 
     def build_canonical_collection(self):
+        print("Mei canonical collections mei hu")
         """
         Build the canonical collection of LR(0) items for the grammar
         
@@ -171,10 +184,12 @@ class SLRParser:
         # Create augmented grammar by adding S' -> S production
         augmented_start = self.grammar.start_symbol + "'"
         initial_item = (augmented_start, [self.grammar.start_symbol], 0)
-        
+        print("INITIAL ITEMS", initial_item)
         # Initialize the canonical collection with the closure of the initial item
-        start_state = frozenset(self.closure({initial_item}))
+        start_state = self.closure(initial_item)
+        print("nohubhinonibnlnoobhk")
         self.states = [start_state]
+        print("This is states of parser")
         self.transitions = {}
         
         changed = True
@@ -205,6 +220,7 @@ class SLRParser:
                     self.transitions[(i, symbol)] = target_index
 
     def build_parsing_table(self):
+        
         """
         Construct the SLR parsing table (ACTION and GOTO tables)
         
@@ -212,8 +228,9 @@ class SLRParser:
             A tuple containing (action_table, goto_table)
         """
         # First build the canonical collection if not already built
-        if not hasattr(self, 'states') or not hasattr(self, 'transitions'):
-            self.build_canonical_collection()
+        # if not hasattr(self, 'states') or not hasattr(self, 'transitions'):
+        print("build parsing table ke andar hu")
+        self.build_canonical_collection()
         
         # Initialize tables
         self.action_table = [{} for _ in range(len(self.states))]
@@ -225,7 +242,7 @@ class SLRParser:
                 self.goto_table[state_idx][symbol] = target_idx
             else:  # Terminal symbols go to ACTION table as shifts
                 self.action_table[state_idx][symbol] = ('shift', target_idx)
-        
+        print("goto ka karekram", self.goto_table)
         # Add reduce actions based on FOLLOW sets
         for state_idx, state in enumerate(self.states):
             for item in state:
@@ -242,7 +259,8 @@ class SLRParser:
                             if follow_symbol in self.action_table[state_idx]:
                                 raise ValueError(f"Shift-Reduce conflict at state {state_idx} for symbol {follow_symbol}")
                             self.action_table[state_idx][follow_symbol] = ('reduce', head, body)
-        
+        print('this is karekram',self.action_table)
+        print("This is andar ka grammar", self.grammar.productions)
         return self.action_table, self.goto_table
 
     def parse(self, input_string):

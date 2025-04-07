@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, jsonify
 from app.slr_parser import Grammar, SLRParser
+from flask import Flask
 from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 bp = Blueprint('main', __name__)
 CORS(bp)
@@ -31,7 +35,6 @@ def parse_grammar():
             
             head, body = prod.split('->', 1)
             productions.append((head.strip(), body.strip().split()))
-
         # Initialize the Grammar and SLR Parser
         grammar = Grammar(productions)
         parser = SLRParser(grammar)
@@ -46,7 +49,6 @@ def parse_grammar():
                 else:
                     serialized[symbol] = action
             action_table.append(serialized)
-
         goto_table = []
         for state_gotos in parser.goto_table:
             serialized = {}
@@ -62,7 +64,6 @@ def parse_grammar():
                 head, body, pos = item
                 serialized_state.append([head, body, pos])
             states.append(serialized_state)
-
         return jsonify({
             'status': 'success',
             'action_table': action_table,

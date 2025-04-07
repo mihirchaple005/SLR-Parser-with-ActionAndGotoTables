@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ productions: productions })
             })
-                .then(response => response.ok ? response.json() : Promise.reject(response))
+                .then(response => response.ok ? response.json() : Promise.reject(response) && console.log(response))
                 .then(data => {
                     if (data.status === 'success') {
                         displayTables(data.action_table, data.goto_table, data.states);
@@ -197,6 +197,7 @@ document.getElementById('build-table').addEventListener('click', function() {
     const productions = [];
     document.querySelectorAll('.production-input').forEach(input => {
         if (input.value) {
+            console.log(input.value);
             productions.push(input.value);
         }
     });
@@ -208,8 +209,13 @@ document.getElementById('build-table').addEventListener('click', function() {
         },
         body: JSON.stringify({ productions })
     })
-    .then(response => response.json())
+    .then(response => {
+        response.json()
+        console.log(response);
+        })
     .then(data => {
+        console.log(data);
+        
         if (data.status === 'success') {
             // Clear existing tables
             document.getElementById('action-table-container').innerHTML = '';
