@@ -193,70 +193,70 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-document.getElementById('build-table').addEventListener('click', function() {
-    const productions = [];
-    document.querySelectorAll('.production-input').forEach(input => {
-        if (input.value) {
-            console.log(input.value);
-            productions.push(input.value);
-        }
-    });
-
-    fetch('/parse_grammar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ productions })
-    })
-    .then(response => {
-        response.json()
-        console.log(response);
-        })
-    .then(data => {
-        console.log(data);
-        
-        if (data.status === 'success') {
-            // Clear existing tables
-            document.getElementById('action-table-container').innerHTML = '';
-            document.getElementById('goto-table-container').innerHTML = '';
-
-            // Display action table
-            const actionTable = data.action_table;
-            const actionTableContainer = document.getElementById('action-table-container');
-            const actionTableElement = document.createElement('table');
-            actionTableElement.classList.add('parsing-table');
-            let header = '<thead><tr><th>State</th><th>Action</th></tr></thead><tbody>';
-            actionTable.forEach((state, index) => {
-                for (const symbol in state) {
-                    header += `<tr><td>${index}</td><td>${state[symbol]}</td></tr>`;
-                }
-            });
-            header += '</tbody>';
-            actionTableElement.innerHTML = header;
-            actionTableContainer.appendChild(actionTableElement);
-
-            // Display goto table
-            const gotoTable = data.goto_table;
-            const gotoTableContainer = document.getElementById('goto-table-container');
-            const gotoTableElement = document.createElement('table');
-            gotoTableElement.classList.add('parsing-table');
-            header = '<thead><tr><th>State</th><th>Goto</th></tr></thead><tbody>';
-            gotoTable.forEach((state, index) => {
-                for (const symbol in state) {
-                    header += `<tr><td>${index}</td><td>${state[symbol]}</td></tr>`;
-                }
-            });
-            header += '</tbody>';
-            gotoTableElement.innerHTML = header;
-            gotoTableContainer.appendChild(gotoTableElement);
-        } else {
-            alert(data.message || 'An error occurred.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to build parsing tables.');
-    });
-});
-
+//document.getElementById('build-table').addEventListener('click', function() {
+//    const productions = [];
+//    document.querySelectorAll('.production-input').forEach(input => {
+//        if (input.value) {
+//            console.log(input.value);
+//            productions.push(input.value);
+//        }
+//    });
+//
+//    fetch('/parse_grammar', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/json',
+//        },
+//        body: JSON.stringify({ productions })
+//    })
+//    .then(response => {
+//        response.json()
+//        console.log(response);
+//        })
+//    .then(data => {
+//        console.log(data);
+//
+//        if (data.status === 'success') {
+//            // Clear existing tables
+//            document.getElementById('action-table-container').innerHTML = '';
+//            document.getElementById('goto-table-container').innerHTML = '';
+//
+//            // Display action table
+//            const actionTable = data.action_table;
+//            const actionTableContainer = document.getElementById('action-table-container');
+//            const actionTableElement = document.createElement('table');
+//            actionTableElement.classList.add('parsing-table');
+//            let header = '<thead><tr><th>State</th><th>Action</th></tr></thead><tbody>';
+//            actionTable.forEach((state, index) => {
+//                for (const symbol in state) {
+//                    header += `<tr><td>${index}</td><td>${state[symbol]}</td></tr>`;
+//                }
+//            });
+//            header += '</tbody>';
+//            actionTableElement.innerHTML = header;
+//            actionTableContainer.appendChild(actionTableElement);
+//
+//            // Display goto table
+//            const gotoTable = data.goto_table;
+//            const gotoTableContainer = document.getElementById('goto-table-container');
+//            const gotoTableElement = document.createElement('table');
+//            gotoTableElement.classList.add('parsing-table');
+//            header = '<thead><tr><th>State</th><th>Goto</th></tr></thead><tbody>';
+//            gotoTable.forEach((state, index) => {
+//                for (const symbol in state) {
+//                    header += `<tr><td>${index}</td><td>${state[symbol]}</td></tr>`;
+//                }
+//            });
+//            header += '</tbody>';
+//            gotoTableElement.innerHTML = header;
+//            gotoTableContainer.appendChild(gotoTableElement);
+//        } else {
+//            alert(data.message || 'An error occurred.');
+//        }
+//    })
+//    .catch(error => {
+//        console.error('Error:', error);
+//        alert('Failed to build parsing tables.');
+//    });
+//});
+//

@@ -60,10 +60,12 @@ def parse_grammar():
         states = []
         for state in parser.states:
             serialized_state = []
-            for item in state:
+            for item in list(state):
                 head, body, pos = item
                 serialized_state.append([head, body, pos])
             states.append(serialized_state)
+        print(action_table)
+        print(goto_table)
         return jsonify({
             'status': 'success',
             'action_table': action_table,
@@ -72,6 +74,8 @@ def parse_grammar():
         })
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()  # 🔍 See full error in terminal
         return jsonify({
             'status': 'error',
             'message': str(e)
@@ -86,7 +90,11 @@ def parse_input():
             'message': 'Invalid request format. Expected JSON with input_string and productions.'
         }), 400
 
+    print("Data ",data)
+    print(type(data))
     input_string = data['input_string']
+    print(input_string)
+    print(type(input_string))
 
     try:
         # Parse the grammar productions
@@ -106,6 +114,7 @@ def parse_input():
         parser = SLRParser(grammar)
 
         # Parse the input string
+        print("halelulu",type(input_string))
         success, steps = parser.parse(input_string.split())
 
         if success:
@@ -120,6 +129,9 @@ def parse_input():
             }), 400
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()
+
         return jsonify({
             'status': 'error',
             'message': str(e)

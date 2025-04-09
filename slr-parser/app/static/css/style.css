@@ -1,92 +1,87 @@
-/* General Styles */
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    margin: 0;
+    background-color: #eef2f7;
+    color: #2c3e50;
     padding: 20px;
-    background-color: #f5f7fa;
-    color: #333;
 }
 
+/* Container */
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: auto;
     background: white;
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
 }
 
+/* Headings */
 h1, h2, h3 {
     color: #2c3e50;
-    margin-top: 0;
+    margin-bottom: 15px;
 }
 
 h1 {
-    border-bottom: 3px solid #3498db;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
     text-align: center;
-}
-
-.section {
+    font-size: 2.5rem;
     margin-bottom: 30px;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 5px;
-    border-left: 4px solid #3498db;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #3498db;
 }
 
-/* Production Input Styling */
+/* Section Blocks */
+.section {
+    margin-bottom: 40px;
+    padding: 25px;
+    background: #f9fbfe;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+/* Grammar Inputs */
 .production {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
 }
 
 .production-input {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     font-family: monospace;
     font-size: 14px;
+    background: #fff;
 }
 
-.remove-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s;
-}
-
-.remove-btn:hover {
-    background: #c0392b;
-}
-
-/* Buttons */
+/* Button Styles */
 button {
-    padding: 12px 18px;
+    padding: 10px 16px;
     background: #3498db;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 6px;
     font-weight: bold;
-    transition: background 0.3s;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
     background: #2980b9;
+    transform: scale(1.02);
 }
 
 button:disabled {
@@ -94,20 +89,59 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* Input String */
-#input-string {
-    padding: 12px;
-    width: 350px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
+.remove-btn {
+    background: #e74c3c;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 18px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Parsing Tables */
+.remove-btn:hover {
+    background: #c0392b;
+}
+
+/* Input String Field */
+#input-string {
+    padding: 12px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Tables Layout */
+#tables-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+#action-table-container, #goto-table-container {
+    flex: 1;
+    min-width: 380px;
+    max-height: 450px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow-x: auto;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Table Styles */
 .parsing-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
     font-size: 14px;
 }
 
@@ -118,43 +152,34 @@ button:disabled {
 }
 
 .parsing-table th {
-    background-color: #3498db;
+    background: #3498db;
     color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
 }
 
 .parsing-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background: #f4f6f9;
 }
 
-/* Tables Container */
-#tables-container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 10px;
-}
-
-#action-table-container, #goto-table-container {
-    flex: 1;
-    min-width: 350px;
-    overflow-x: auto;
-    max-height: 400px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background: #ffffff;
-    border-radius: 5px;
-}
-
-/* Parsing Results */
+/* Parse Results */
 #parse-result {
     margin-top: 20px;
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 4px;
-    border-left: 4px solid #2ecc71;
+    background: #f1fdf5;
+    border-left: 5px solid #2ecc71;
+    border-radius: 6px;
     font-family: monospace;
     white-space: pre-wrap;
     overflow-x: auto;
+    color: #2c3e50;
+}
+
+/* Status Texts */
+.success {
+    color: #2ecc71;
+    font-weight: bold;
 }
 
 .error {
@@ -162,38 +187,36 @@ button:disabled {
     font-weight: bold;
 }
 
-.success {
-    color: #2ecc71;
-}
-
 .loading {
     color: #3498db;
     font-style: italic;
 }
 
-/* Responsive Design */
+/* Feedback */
+#feedback {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     #tables-container {
         flex-direction: column;
     }
-    
+
     .production {
         flex-direction: column;
-        gap: 5px;
-    }
-    
-    .remove-btn {
-        margin-left: 0;
-        margin-top: 5px;
-        width: 100%;
+        gap: 8px;
     }
 
-    button {
-        width: 100%;
-        margin-top: 5px;
-    }
-
+    button,
     #input-string {
         width: 100%;
+    }
+
+    .remove-btn {
+        width: 100%;
+        border-radius: 6px;
     }
 }
